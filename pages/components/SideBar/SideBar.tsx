@@ -1,10 +1,10 @@
-import { StyledContainer } from "./Sidebar.style";
+import { StyleSidebarContainer } from "./Sidebar.style";
 
 import React from 'react'
 
 function SideBar() {
   return (
-    <StyledContainer>SideBar</StyledContainer>
+    <StyleSidebarContainer>SideBar</StyleSidebarContainer>
   )
 }
 
