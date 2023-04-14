@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import SideBar from './components/SideBar/SideBar'
 
 import View from './components/View/View'
 
