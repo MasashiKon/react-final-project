@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const StyledExerciseContainer = styled(motion.div)`
+interface Props {
+    isClicked: boolean
+}
+
+export const StyledExerciseCardContainer = styled(motion.div)<Props>`
     width: 200px;
-    height: 100vh;
+    height: 100px;
+    background-color: ${(props) => (props.isClicked ? "#8FF092" : "#F47777")};
     padding: 20px 0 0 0 ;
     text-align: center;
 

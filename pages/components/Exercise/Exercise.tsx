@@ -1,24 +1,21 @@
 import { useState } from 'react'
 
+import { useStore } from '../../../lib/store'
+
+import { User } from '../../../lib/slice/createUserSlice'
+
 import { StyledExerciseContainer } from './Exercise.style'
 import Button from '../Button/Button'
 
-const dummyArr = [
-    {name: "exercise1"},
-    {name: "exercise2"}
-]
-
-function Exercise({dummyName}) {
-    const [isClicked, setIsClicked] = useState(false)
-
-    const handleClick = () => {
-        setIsClicked(!isClicked);
-    }
+function Exercise() {
+    const didToday: boolean = useStore((state: User) => state.didToday);
+    const toggle = useStore((state: User) => state.toggleToTrue)
 
     return (
+        <StyledExerciseContainer>
+            Finish today's exercise?: {String(didToday)}
 
-        <StyledExerciseContainer onClick={handleClick} isClicked={isClicked} whileTap={{scale: 1.2}}>
-            {dummyName}
+            <button onClick={toggle}>Finish exercise</button>
         </StyledExerciseContainer>
     )
 }

@@ -11,7 +11,7 @@ const dummyArr = [
 function Main() {
   return (
     <StyledMainContainer>
-        {dummyArr.map(ex => <Exercise dummyName={ex.name}/>)}
+    <Exercise/>
         
     </StyledMainContainer>
   )
