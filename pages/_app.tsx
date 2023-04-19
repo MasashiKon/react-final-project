@@ -1,6 +1,8 @@
 import type { AppProps } from 'next/app'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
+import View from '../components/View/View'
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -26,7 +28,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <View>
+          <Component {...pageProps} />
+        </View>
       </ThemeProvider>
     </>
   )

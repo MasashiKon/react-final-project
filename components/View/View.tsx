@@ -5,11 +5,13 @@ import Status from '../Status/Status'
 import SideBar from '../SideBar/SideBar'
 import Main from '../Main/Main'
 
-function View() {
+function View({children}) {
+  console.log(children);
+  
   return (
     <StyledViewContainer>
         <Status />
-        <Main />
+          {children}
         <SideBar />
     </StyledViewContainer>
   )

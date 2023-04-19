@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import View from './components/View/View'
+import Main from '../components/Main/Main'
 
 const Title = styled.h1`
   font-size: 50px;
@@ -8,5 +8,5 @@ const Title = styled.h1`
 `
 
 export default function Home() {
-  return <View />
+  return <Main />
 }

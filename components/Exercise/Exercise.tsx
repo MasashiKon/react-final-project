@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
-import { useStore } from '../../../lib/store'
+import { useRouter } from 'next/router'
+import { useStore } from '../../lib/store'
 
-import { User } from '../../../lib/slice/createUserSlice'
+import { User } from '../../lib/slice/createUserSlice'
 
 import { StyledExerciseContainer } from './Exercise.style'
 import Button from '../Button/Button'
