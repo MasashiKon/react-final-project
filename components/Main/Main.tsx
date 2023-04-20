@@ -13,7 +13,6 @@ function Main() {
   return (
     <StyledMainContainer>
     <ExerciseCard dummyName={"test"}/>
-    <Exercise/>
     </StyledMainContainer>
   )
 }

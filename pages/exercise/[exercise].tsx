@@ -1,8 +1,9 @@
 import React from 'react'
 
+import Exercise from '../../components/Exercise/Exercise'
 function exercise() {
   return (
-    <div>exercise</div>
+    <Exercise />
   )
 }
 

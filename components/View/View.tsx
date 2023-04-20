@@ -10,9 +10,9 @@ function View({children}) {
   
   return (
     <StyledViewContainer>
-        <Status />
-          {children}
         <SideBar />
+          {children}
+        <Status />
     </StyledViewContainer>
   )
 }

@@ -23,7 +23,7 @@ function ExerciseCard({dummyName}) {
 
     return (
         <Link href="/exercise/1">
-            <StyledExerciseCardContainer onClick={handleClick} $isclicked={isclicked} whileTap={{scale: 1.2}}>
+            <StyledExerciseCardContainer onClick={handleClick} $isclicked={isclicked} whileTap={{scale: 1.2}} className={"exerciseCard"}>
                 {}
             </StyledExerciseCardContainer>
         </Link>

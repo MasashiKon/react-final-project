@@ -3,7 +3,19 @@ import { StyledStatusContainer } from './Status.style'
 
 function Status() {
   return (
-    <StyledStatusContainer>Status</StyledStatusContainer>
+    <StyledStatusContainer>
+      <ul>
+        <li>
+          streak
+        </li>
+        <li>
+          exp
+        </li>
+        <li>
+          week goal
+        </li>
+      </ul>
+    </StyledStatusContainer>
   )
 }
 

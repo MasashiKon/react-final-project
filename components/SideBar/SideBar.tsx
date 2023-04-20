@@ -4,7 +4,19 @@ import React from 'react'
 
 function SideBar() {
   return (
-    <StyleSidebarContainer>SideBar</StyleSidebarContainer>
+    <StyleSidebarContainer>
+      <ul>
+        <li>
+          home
+        </li>
+        <li>
+          use page
+        </li>
+        <li>
+          setting
+        </li>
+      </ul>
+    </StyleSidebarContainer>
   )
 }
 

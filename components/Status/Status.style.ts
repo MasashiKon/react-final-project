@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 
 export const StyledStatusContainer = styled(motion.div)`
-    background-color: black;
+    background-color: grey;
     height: 100vh;
     width: 10vw;
 
