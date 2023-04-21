@@ -5,9 +5,7 @@ import Status from '../Status/Status'
 import SideBar from '../SideBar/SideBar'
 import Main from '../Main/Main'
 
-function View({children}) {
-  console.log(children);
-  
+function View({children}) {  
   return (
     <StyledViewContainer>
         <SideBar />

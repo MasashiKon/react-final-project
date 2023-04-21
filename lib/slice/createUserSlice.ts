@@ -1,8 +1,12 @@
 import { StateCreator } from "zustand";
 
 export interface User {
+    id: number
     didToday: boolean
+    streak: number
     toggleToTrue(): void
+    getUserInfo: ({}) => void
+    updateStreak: ({}) =>  void
 }
 
 export interface UserSlice {
