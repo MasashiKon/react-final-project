@@ -1,6 +1,8 @@
 import type { AppProps } from 'next/app'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
+import { SessionProvider } from "next-auth/react"
+
 import View from '../components/View/View'
 
 const GlobalStyle = createGlobalStyle`
@@ -23,15 +25,17 @@ const theme: ThemeInterface = {
   },
 }
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   return (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <View>
-          <Component {...pageProps} />
-        </View>
-      </ThemeProvider>
+      <SessionProvider session={session}>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <View>
+            <Component {...pageProps} />
+          </View>
+        </ThemeProvider>
+      </SessionProvider>
     </>
   )
 }
