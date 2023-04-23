@@ -23,7 +23,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if(req.method === "POST") {
 
-        console.log(req.body);
+        // console.log(req.body);
         
         
         const {id, streak} = req.body
@@ -38,7 +38,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
         client.close();
 
-        console.log(user.value.streak);
+        // console.log(user.value.streak);
         
 
         res.status(200).json({value: user.value.streak})

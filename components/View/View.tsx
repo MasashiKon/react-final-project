@@ -9,6 +9,8 @@ import { useSession, signIn, signOut } from "next-auth/react"
 
 function View({children}) {  
   const { data: session, status } = useSession()
+  // console.log("kore:", session);
+  
   return (
     <StyledViewContainer>
         <SideBar />

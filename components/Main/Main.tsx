@@ -4,6 +4,8 @@ import { StyledMainContainer } from './Main.style'
 import Exercise from '../Exercise/Exercise'
 import ExerciseCard from '../ExerciseCard/ExerciseCard'
 
+import { getSession } from 'next-auth/react'
+
 const dummyArr = [
     {name: "exercise1"},
     {name: "exercise2"}
@@ -12,7 +14,7 @@ const dummyArr = [
 function Main() {
   return (
     <StyledMainContainer>
-    <ExerciseCard dummyName={"test"}/>
+      <ExerciseCard dummyName={"test"}/>
     </StyledMainContainer>
   )
 }
