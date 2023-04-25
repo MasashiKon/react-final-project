@@ -33,12 +33,12 @@ export const authOptions: NextAuthOptions = {
       
         const usersStatusCollection = db.collection('usersStatus')
       
-        const user = await usersStatusCollection.findOne({name: "testUser"}, {projection:{_id:0}})
+        const res = await usersStatusCollection.findOne({name: "testUser"}, {projection:{_id:0}})
       
         client.close();
 
         // console.log("user: " ,user);
-        
+        const user = await res.json();
   
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -51,22 +51,15 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+
   callbacks: {
-    async jwt({ token, account }) {
-      // Persist the OAuth access_token to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token
-      }
+    async jwt({ token }) {
+      token.userRole = "admin"
       return token
     },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
-      session.accessToken = token.accessToken
-      return session
-    }
   },
   session: {
-    maxAge: 60 * 10,
+    maxAge: 30 * 60,
     strategy: "jwt"
   }
 }

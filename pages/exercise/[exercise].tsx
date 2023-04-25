@@ -12,7 +12,7 @@ import { getSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { get } from 'http';
 function exercise({user}) {
-  const setUserInfo = useStore((state: User) => state.getUserInfo)
+  const setUserInfo = useStore((state: User) => state.setUserInfo)
   const updateStreak = useStore((state: User) => state.updateStreak)
 
   useEffect(() => {

@@ -2,10 +2,13 @@ import { StateCreator } from "zustand";
 
 export interface User {
     id: number
+    name: string
     didToday: boolean
     streak: number
+    isLoading: boolean
     toggleToTrue(): void
-    getUserInfo: ({}) => void
+    setUserInfo: ({}) => void
+    setIsLoading: (isLoading: boolean) => void
     updateStreak: ({}) =>  void
 }
 

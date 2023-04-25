@@ -8,11 +8,14 @@ type UserState = UserSlice //& OtherSlice
 export const useStore = create((set, get) => ({
     id: 0,
     didToday: false,
+    name: "",
     streak: 0,
+    isLoading: false,
     toggleToTrue: () => set({didToday: true}),
-    getUserInfo: (user: User) => set({...user}),
+    setUserInfo: (user: User) => set({...user}),
+    setIsLoading: (isLoading: boolean) => set(() => ({isLoading})),
     updateStreak: async ({id, streak} : {id: number, streak: number}) => {
-        const result = await fetch('/api/user-status', {
+        const result = await fetch('/api/update-streak', {
             method: 'POST',
             body: JSON.stringify({id, streak: streak + 1}),
             headers: {
