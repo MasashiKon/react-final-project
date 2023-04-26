@@ -8,20 +8,26 @@ import { User } from '../../lib/slice/createUserSlice';
 
 import Exercise from '../../components/Exercise/Exercise'
 
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+
 import { getSession } from 'next-auth/react';
 import { getServerSession } from 'next-auth';
 import { get } from 'http';
 function exercise({user}) {
+
   const setUserInfo = useStore((state: User) => state.setUserInfo)
   const updateStreak = useStore((state: User) => state.updateStreak)
+  const {status} = useSession()
+  const router = useRouter();
 
-  useEffect(() => {
-    setUserInfo(user)
-  }, [])
+  // if(status === "unauthenticated" || status === "loading") {
+  //   router.push('/')
+  // }
   
   
   return (
-    <Exercise testUpdate={updateStreak}/>
+    status === 'authenticated' ? <Exercise testUpdate={updateStreak}/> : <></>
   )
 }
 
@@ -38,8 +44,6 @@ export async function getServerSideProps(context) {
   }
   const { user: {name, email} } = session;
 
-  console.log(name, email);
-  
 
   const client = await MongoClient.connect(`mongodb+srv://konnonorth:${process.env.MONGO_PASSWORD}@cluster0.atk8kob.mongodb.net/users?retryWrites=true&w=majority`);
 

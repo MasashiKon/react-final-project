@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Main from '../components/Main/Main'
-import { useSession } from 'next-auth/react'
+import { useSession, signIn } from 'next-auth/react'
 import { use, useEffect } from 'react';
 import { useStore } from '../lib/store';
 
@@ -13,7 +13,7 @@ const Title = styled.h1`
 `
 
 export default function Home() {
-  const {status, data} = useSession();  
+  const {status, data} = useSession();    
 
   const setUserInfo = useStore((state: User) => state.setUserInfo)
   const setIsLoading = useStore((state: User) => state.setIsLoading)
@@ -24,11 +24,19 @@ export default function Home() {
     const getUserInfo =  async () => {
       if(status === "authenticated" && userName === "") {
         try {
-          const {name, email} = data.user;
+          const {name, email, password} = data.user;
+          
+          let identifier;
+
+          if(email) {
+            identifier = email;
+          } else if(password) {        
+            identifier = password;
+          }
           setIsLoading(true);
           const res = await fetch("/api/get-user-status", {
             method: "POST",
-            body: JSON.stringify({name, email}),
+            body: JSON.stringify({name, identifier}),
             headers: {
               'Content-Type': 'application/json'
             }
@@ -36,7 +44,7 @@ export default function Home() {
           
           const user = await res.json();
           
-          setUserInfo({...user, authentication: status});
+          setUserInfo({name: user.name, streak: user.streak, identifier: user.email ? user.email : user.password, authentication: status});
                     
           setIsLoading(false)
         } catch(err) {
@@ -50,6 +58,12 @@ export default function Home() {
   }, [status])
   
   return (
-    <Main />
+    status === "authenticated" ? (
+      <Main />
+    ) : (
+      <>
+        <button onClick={() => signIn()}>Sign In / Sign Up</button>
+      </>
+    )
   )
 }

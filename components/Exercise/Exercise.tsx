@@ -13,19 +13,20 @@ import { MongoClient } from 'mongodb'
 function Exercise({testUpdate}) {
     // const didToday: boolean = useStore((state: User) => state.didToday);
     // const toggle = useStore((state: User) => state.toggleToTrue)
-    const id: number = useStore((state: User) => state.id)
+    const name: string = useStore((state: User) => state.name)
+    // const name: string = useStore((state: User) => state.name)
+    const identifier: string = useStore((state: User) => state.identifier);
     const streak: number = useStore((state: User) => state.streak)
     const updateStreak = useStore((state: User) => state.updateStreak)
 
-    const updateUser = async ({id, streak}) => {
-        const test = await updateStreak({id, streak})
+    const updateUser = async ({identifier, streak, name}) => {                
+        const test = await updateStreak({identifier, streak, name})
     }
 
     return (
         <StyledExerciseContainer>
             Finish today's exercise?: 
-
-            <button onClick={() => updateUser({id, streak})}>Finish exercise</button>
+            <button onClick={() => updateUser({identifier, streak, name})}>Finish exercise</button>
             <p>steak: {streak}</p>
         </StyledExerciseContainer>
     )

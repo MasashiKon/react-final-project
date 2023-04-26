@@ -6,6 +6,7 @@ export interface User {
     didToday: boolean
     streak: number
     isLoading: boolean
+    identifier: string
     toggleToTrue(): void
     setUserInfo: ({}) => void
     setIsLoading: (isLoading: boolean) => void

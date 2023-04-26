@@ -4,9 +4,13 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { MongoClient } from "mongodb"
 
 import { RequestInternal } from "next-auth"
+import { log } from "console"
+
+import sha256 from "sha256"
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
+  secret: process.env.AUTH_SECRET,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID,
@@ -26,6 +30,10 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials: any, req: any) {
         // Add logic here to look up the user from the credentials supplied
+
+        const {username, password} = credentials
+
+        const hashedPass = sha256(password)
         
         const client = await MongoClient.connect(`mongodb+srv://konnonorth:${process.env.MONGO_PASSWORD}@cluster0.atk8kob.mongodb.net/users?retryWrites=true&w=majority`);
 
@@ -33,34 +41,106 @@ export const authOptions: NextAuthOptions = {
       
         const usersStatusCollection = db.collection('usersStatus')
       
-        const res = await usersStatusCollection.findOne({name: "testUser"}, {projection:{_id:0}})
-      
-        client.close();
+        let user: any = await usersStatusCollection.findOne({$and: [{name: username, password: hashedPass}]}, {projection:{_id:0}});
 
-        // console.log("user: " ,user);
-        const user = await res.json();
-  
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
-        }
+        if(!user) {
+          const userObj = {
+            name: username,
+            password: hashedPass,
+            streak: 0,
+          }
+
+          await usersStatusCollection.insertOne(userObj)
+
+          user = userObj;
+        } 
+      
+        client.close();        
+
+        return user
+        
+
+        // let user;
+
+        // if(res) {                    
+        //   user = res
+        //   console.log("inside: ", user);
+        // } else {
+        //   user = {
+        //     name: username,
+        //     password: hashedPass,
+        //     streak: 0
+        //   }
+        // }
+
+        // console.log("outside: ", user);
+        
+        
+        // if (user) {
+        //   // Any object returned will be saved in `user` property of the JWT
+        //   return user
+        // } else {
+        //   // If you return null then an error will be displayed advising the user to check their details.
+        //   return null
+        //   // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+        // }
       }
     })
   ],
 
   callbacks: {
-    async jwt({ token }) {
+    async jwt({ token, user, account, profile }) {    
+      if(account?.type === 'oauth') {
+        try{
+
+          const {name, email} = token;          
+          
+          const client = await MongoClient.connect(`mongodb+srv://konnonorth:${process.env.MONGO_PASSWORD}@cluster0.atk8kob.mongodb.net/users?retryWrites=true&w=majority`);
+
+          const db = client.db();
+
+          const usersStatusCollection = db.collection('usersStatus')
+
+          const user = await usersStatusCollection.findOne({$and: [{name}, {email}]})         
+          
+          if(!user) {
+            const userObj = {
+              name,
+              email,
+              streak: 0
+            }
+
+            await usersStatusCollection.insertOne(userObj)
+          }
+
+          client.close();
+          
+          token.userRole = "admin"
+          return token
+        } catch(err) {
+          console.error(err);
+        }
+      } else if(account?.type === "credentials") {
+        const {password} = user
+        token.password = password
+      }
       token.userRole = "admin"
       return token
     },
+    async session({ session, token, user }) {
+
+      const {password} = token;
+
+      session.user.password = password;
+      
+      return session
+    },
   },
   session: {
-    maxAge: 30 * 60,
     strategy: "jwt"
+  },
+  jwt: {
+    maxAge: 60 * 60
   }
 }
 

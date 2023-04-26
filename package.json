@@ -15,6 +15,7 @@
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "react-spinners": "^0.13.8",
+    "sha256": "^0.2.0",
     "styled-components": "^5.3.5",
     "zustand": "^4.3.7"
   },

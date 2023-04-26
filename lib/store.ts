@@ -11,18 +11,23 @@ export const useStore = create((set, get) => ({
     name: "",
     streak: 0,
     isLoading: false,
+    identifier: null,
     toggleToTrue: () => set({didToday: true}),
     setUserInfo: (user: User) => set({...user}),
     setIsLoading: (isLoading: boolean) => set(() => ({isLoading})),
-    updateStreak: async ({id, streak} : {id: number, streak: number}) => {
+    updateStreak: async ({identifier, streak, name} : {name: string, identifier: string, streak: number}) => {
+        
         const result = await fetch('/api/update-streak', {
             method: 'POST',
-            body: JSON.stringify({id, streak: streak + 1}),
+            body: JSON.stringify({identifier, name, streak: streak + 1}),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         const json = await result.json();
+
+        console.log(json.value);
+        
         
         
         return set((state: User) => ({streak: json.value}))

@@ -3,6 +3,8 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components'
 
 import { SessionProvider } from "next-auth/react"
 
+import { useSession } from 'next-auth/react'
+
 import View from '../components/View/View'
 
 const GlobalStyle = createGlobalStyle`
