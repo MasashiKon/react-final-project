@@ -31,37 +31,8 @@ function exercise({user}) {
   )
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  if(!session) {
-    return {
-      props: {
-        user: {
-
-        }
-      }
-    }
-  }
-  const { user: {name, email} } = session;
-
-
-  const client = await MongoClient.connect(`mongodb+srv://konnonorth:${process.env.MONGO_PASSWORD}@cluster0.atk8kob.mongodb.net/users?retryWrites=true&w=majority`);
-
-  const db = client.db();
-
-  const usersStatusCollection = db.collection('usersStatus')
-
-  const user = await usersStatusCollection.findOne({$and: [{name}, {email}]}, {projection:{_id:0}})
-
-  client.close();
-
-
-  return {
-    props: {
-      user
-    }
-  }
-  
-}
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
+// }
 
 export default exercise
