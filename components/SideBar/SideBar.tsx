@@ -3,15 +3,16 @@ import { StyleSidebarContainer } from "./Sidebar.style";
 import React from 'react'
 
 import { useSession, signIn, signOut } from "next-auth/react"
+import { motion } from "framer-motion";
 
 function SideBar() {
   const { data: session, status } = useSession()
 
   return (
-    <StyleSidebarContainer>
+    <StyleSidebarContainer layout initial={{width: "0"}} animate={{width: "20vw"}}>
       {
         status === "authenticated" ? (
-            <ul>
+            <motion.ul layout initial={{x: "-100px", opacity: 0}} animate={{x: "0", opacity: 1}}>
               <li>
                 home
               </li>
@@ -23,11 +24,10 @@ function SideBar() {
               </li>
               <li>
                   <>
-                    Signed in as {session.user.email} <br />
                     <button onClick={() => signOut()}>Sign out</button>
                   </>
               </li>
-            </ul>
+            </motion.ul>
         ) : (
           <>
             Not signed in <br />

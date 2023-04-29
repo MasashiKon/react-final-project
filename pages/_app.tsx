@@ -5,7 +5,13 @@ import { SessionProvider } from "next-auth/react"
 
 import { useSession } from 'next-auth/react'
 
+import { useRouter } from 'next/router'
+
+import { AnimatePresence } from 'framer-motion'
+
 import View from '../components/View/View'
+
+import { motion } from 'framer-motion'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -28,13 +34,19 @@ const theme: ThemeInterface = {
 }
 
 export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
+
+  const router = useRouter();
+  const pageKey = router.asPath;
+
   return (
     <>
       <SessionProvider session={session}>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <View>
-            <Component {...pageProps} />
+            <AnimatePresence initial={false} mode='wait'>
+                <Component key={[pageKey]} {...pageProps} />
+            </AnimatePresence>
           </View>
         </ThemeProvider>
       </SessionProvider>

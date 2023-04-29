@@ -1,18 +1,13 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const StyledExerciseContainer = styled(motion.div)`
-    width: 60vw;
-    height: 100vh;
-    padding: 20px 0 0 0 ;
-    text-align: center;
+export const StyledSigninWindow = styled(motion.div)`
+    height: 200px;
+    width: 200px;
+    margin: auto;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    
-
-    background-color: #FFFFFF;
 
     @media (min-width: 576px) {
 
@@ -29,4 +24,4 @@ export const StyledExerciseContainer = styled(motion.div)`
     @media (min-width: 1200px) {
         
     }
-`;
+`

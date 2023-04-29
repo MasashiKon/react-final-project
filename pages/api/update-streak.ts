@@ -6,7 +6,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if(req.method === "POST") {        
         
-        const {identifier, streak, name} = req.body
+        const {identifier, streak, name, exercise} = req.body
 
         const client = await MongoClient.connect(`mongodb+srv://konnonorth:${process.env.MONGO_PASSWORD}@cluster0.atk8kob.mongodb.net/users?retryWrites=true&w=majority`);
 
@@ -22,26 +22,38 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             user = await usersStatusCollection.findOne({$and: [{name}, {password: identifier}]}, {projection:{_id:0}})
         }
 
+        let updatedUser;
         if(user.lastCommit) {
             if(!user.didToday) {
-                let updatedUser;
                 if(identifier.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
-                    updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, email: identifier}]}, { $set: {streak: streak, didToday: true, lastCommit: new Date()}}, {returnDocument: "after", projection:{_id:0}})
+                    updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, email: identifier}]}, { $set: {streak: streak, didToday: true, lastCommit: new Date(), [`course.exercise${exercise}.isDone`]: true}}, {returnDocument: "after", projection:{_id:0}})
                 } else {
-                    updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, password: identifier}]}, { $set: {streak: streak, didToday: true, lastCommit: new Date()}}, {returnDocument: "after", projection:{_id:0}})
+                    updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, password: identifier}]}, { $set: {streak: streak, didToday: true, lastCommit: new Date(), [`course.exercise${exercise}.isDone`]: true}}, {returnDocument: "after", projection:{_id:0}})
+                }
+
+                user = updatedUser.value
+            } else {
+                if(identifier.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+                    updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, email: identifier}]}, { $set: {lastCommit: new Date(), [`course.exercise${exercise}.isDone`]: true}}, {returnDocument: "after", projection:{_id:0}})
+                } else {
+                    updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, password: identifier}]}, { $set: {lastCommit: new Date(), [`course.exercise${exercise}.isDone`]: true}}, {returnDocument: "after", projection:{_id:0}})
                 }
 
                 user = updatedUser.value
             }
+        } else {
+            if(identifier.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)) {
+                updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, email: identifier}]}, { $set: {lastCommit: new Date(), [`course.exercise${exercise}.isDone`]: true}}, {returnDocument: "after", projection:{_id:0}})
+            } else {
+                updatedUser = await usersStatusCollection.findOneAndUpdate({$and: [{name, password: identifier}]}, { $set: {lastCommit: new Date(), [`course.exercise${exercise}.isDone`]: true}}, {returnDocument: "after", projection:{_id:0}})
+            }
+
+            user = updatedUser.value
         }
-
-        
-
-        
         
         client.close();
 
-        res.status(200).json({value: user.streak})
+        res.status(200).json({value: user})
     }
 }
 

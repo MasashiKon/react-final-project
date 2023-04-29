@@ -8,7 +8,9 @@ import { useRouter } from 'next/navigation'
 import Status from '../Status/Status'
 import SideBar from '../SideBar/SideBar'
 import Main from '../Main/Main'
+import { motion } from 'framer-motion'
 
+import { StyledBack } from '../Back/Back.style'
 function View({children}) {  
 
   const {status} = useSession()
@@ -17,7 +19,8 @@ function View({children}) {
   return (
     status === 'authenticated' ? (
       <StyledViewContainer>
-        <SideBar />
+        <StyledBack />
+        <SideBar/>
           {children}
         <Status />
       </StyledViewContainer>

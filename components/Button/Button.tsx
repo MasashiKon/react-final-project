@@ -2,9 +2,9 @@ import React from 'react'
 
 import { StyledButton } from './Button.style'
 
-function Button() {
+function Button({text, handleClick}) {
   return (
-    <StyledButton>Button</StyledButton>
+    <StyledButton onClick={() => handleClick()}>{text}</StyledButton>
   )
 }
 

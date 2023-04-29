@@ -1,18 +1,14 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-export const StyledExerciseContainer = styled(motion.div)`
-    width: 60vw;
+export const StyledWelcomePage = styled(motion.div)`
     height: 100vh;
-    padding: 20px 0 0 0 ;
-    text-align: center;
+    width: 100vw;
+    background-color: grey;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    text-align: center;
     align-items: center;
-    
-
-    background-color: #FFFFFF;
+    flex-direction: column;
 
     @media (min-width: 576px) {
 
@@ -29,4 +25,4 @@ export const StyledExerciseContainer = styled(motion.div)`
     @media (min-width: 1200px) {
         
     }
-`;
+`

@@ -1,6 +1,7 @@
 import { StateCreator } from "zustand";
 
 export interface User {
+    isLoaded: boolean
     id: number
     name: string
     didToday: boolean
@@ -11,6 +12,7 @@ export interface User {
     setUserInfo: ({}) => void
     setIsLoading: (isLoading: boolean) => void
     updateStreak: ({}) =>  void
+    loadLessons: () => void
 }
 
 export interface UserSlice {
