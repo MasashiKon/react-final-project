@@ -14,8 +14,10 @@ export const StyledExerciseContainer = styled(motion.div)`
 
     background-color: #FFFFFF;
 
-    @media (min-width: 576px) {
-
+    @media (max-width: 576px) {
+        width: 100vw;
+        height: 90vh;
+        padding: 0;
     }
 
     @media (min-width: 768px) {

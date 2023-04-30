@@ -5,33 +5,33 @@ import React from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { motion } from "framer-motion";
 
+import { StyledCommonButton } from "../Button/CommonButton.style";
+
 function SideBar() {
   const { data: session, status } = useSession()
 
   return (
-    <StyleSidebarContainer layout initial={{width: "0"}} animate={{width: "20vw"}}>
+    <StyleSidebarContainer>
       {
         status === "authenticated" ? (
             <motion.ul layout initial={{x: "-100px", opacity: 0}} animate={{x: "0", opacity: 1}}>
               <li>
-                home
+                Home
               </li>
               <li>
-                use page
+                Use Page
               </li>
               <li>
-                setting
+                Setting
               </li>
               <li>
-                  <>
-                    <button onClick={() => signOut()}>Sign out</button>
-                  </>
+                  <StyledCommonButton whileHover={{scale: 1.1}} whileTap={{scale: 0.8}} onClick={() => signOut()}>Sign out</StyledCommonButton>
               </li>
             </motion.ul>
         ) : (
           <>
             Not signed in <br />
-            <button onClick={() => signIn()}>Sign in</button>
+            <StyledCommonButton whileHover={{scale: 1.1}} whileTap={{scale: 0.8}} onClick={() => signIn()}>Sign in</StyledCommonButton>
           </>
         )         
       }

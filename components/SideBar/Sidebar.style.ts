@@ -5,14 +5,15 @@ export const StyleSidebarContainer = styled(motion.div)`
     color: #222222;
     background-color: #95A3B3;
     height: 100vh;
-    width: 10vw;
+    width: 20vw;
+    font-size: 20px;
 
     li {
         list-style: none;
     }
 
-    @media (min-width: 576px) {
-
+    @media (max-width: 576px) {
+        
     }
 
     @media (min-width: 768px) {

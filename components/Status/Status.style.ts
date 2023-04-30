@@ -10,10 +10,11 @@ export const StyledStatusContainer = styled(motion.div)`
     li {
         list-style: none;
         font-size: 20px;
+        margin: 10px;
     }
 
     @media (min-width: 576px) {
-
+        
     }
 
     @media (min-width: 768px) {

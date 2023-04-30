@@ -20,8 +20,9 @@ export const StyledMainContainer = styled(motion.div)`
         margin: 30px;
     }
 
-    @media (min-width: 576px) {
-
+    @media (max-width: 576px) {
+        width: 100vw;
+        height: 90vh;
     }
 
     @media (min-width: 768px) {

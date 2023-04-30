@@ -19,8 +19,8 @@ function View({children}) {
   return (
     status === 'authenticated' ? (
       <StyledViewContainer>
-        <StyledBack />
-        <SideBar/>
+        <StyledBack/>
+        <SideBar />
           {children}
         <Status />
       </StyledViewContainer>
